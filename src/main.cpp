@@ -1,6 +1,7 @@
 #include "SDL.h" 
 
 void Pong_GenerateOutput(SDL_Renderer *r) {
+  int wall_thickness = 15;
   SDL_SetRenderDrawColor(r, 0, 0, 255, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(r);
 
@@ -10,15 +11,15 @@ void Pong_GenerateOutput(SDL_Renderer *r) {
     0,
     0,
     1024,
-    15
+    wall_thickness
   };
   SDL_RenderFillRect(r, &top_wall);
 
   SDL_Rect bottom_wall {
     0,
-    749,
+    768 - wall_thickness,
     1024,
-    15
+    wall_thickness
   };
   SDL_RenderFillRect(r, &bottom_wall);
 
