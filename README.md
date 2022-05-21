@@ -1,0 +1,6 @@
+# Pdotong
+
+```
+cmake .
+make
+```
