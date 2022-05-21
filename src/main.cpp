@@ -1,8 +1,27 @@
 #include "SDL.h" 
 
 void Pong_GenerateOutput(SDL_Renderer *r) {
-  SDL_SetRenderDrawColor(r, 255, 255, 0, SDL_ALPHA_OPAQUE);
+  SDL_SetRenderDrawColor(r, 0, 0, 255, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(r);
+
+  SDL_SetRenderDrawColor(r, 255, 255, 0, SDL_ALPHA_OPAQUE);
+
+  SDL_Rect top_wall {
+    0,
+    0,
+    1024,
+    15
+  };
+  SDL_RenderFillRect(r, &top_wall);
+
+  SDL_Rect bottom_wall {
+    0,
+    749,
+    1024,
+    15
+  };
+  SDL_RenderFillRect(r, &bottom_wall);
+
   SDL_RenderPresent(r);
 }
 
@@ -41,8 +60,8 @@ int main(int argc, char *argv[])
     "SDL2Test",
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
-    640,
-    480,
+    1024,
+    768,
     0
   );
 
