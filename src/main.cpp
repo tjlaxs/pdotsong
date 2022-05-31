@@ -2,59 +2,63 @@
 
 class Pong {
   public:
-    bool running;
-    SDL_Renderer *renderer;
+    bool running = true;
+    SDL_Renderer *renderer = NULL;
     int thickness = 15;
+    
+    void GenerateOutput();
+    void UpdateGame();
+    void ProcessInput();
 };
 
-void Pong_GenerateOutput(Pong *p) {
-  SDL_SetRenderDrawColor(p->renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-  SDL_RenderClear(p->renderer);
+void Pong::GenerateOutput() {
+  SDL_SetRenderDrawColor(this->renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
+  SDL_RenderClear(this->renderer);
 
-  SDL_SetRenderDrawColor(p->renderer, 255, 255, 0, SDL_ALPHA_OPAQUE);
+  SDL_SetRenderDrawColor(this->renderer, 255, 255, 0, SDL_ALPHA_OPAQUE);
 
   SDL_Rect top_wall {
     0,
     0,
     1024,
-    p->thickness
+    this->thickness
   };
-  SDL_RenderFillRect(p->renderer, &top_wall);
+  SDL_RenderFillRect(this->renderer, &top_wall);
 
   SDL_Rect bottom_wall {
     0,
-    768 - p->thickness,
+    768 - this->thickness,
     1024,
-    p->thickness
+    this->thickness
   };
-  SDL_RenderFillRect(p->renderer, &bottom_wall);
+  SDL_RenderFillRect(this->renderer, &bottom_wall);
 
-  SDL_RenderPresent(p->renderer);
+  SDL_RenderPresent(this->renderer);
 }
 
-void Pong_UpdateGame() {}
+void Pong::UpdateGame() {}
 
-void Pong_ProcessInput(Pong *p) {
+void Pong::ProcessInput(void) {
   SDL_Event ev;
   while (SDL_PollEvent(&ev)) {
     switch (ev.type) {
       case SDL_QUIT:
-        p->running = false;
+        this->running = false;
         break;
     }
   }
 
   const Uint8* state = SDL_GetKeyboardState(NULL);
   if (state[SDL_SCANCODE_ESCAPE]) {
-    p->running = false;
+    this->running = false;
   }
 }
 
 void Pong_GameLoop(Pong *p) {
   while (p->running) {
-    Pong_ProcessInput(p);
-    Pong_UpdateGame();
-    Pong_GenerateOutput(p);
+    p->ProcessInput();
+    p->UpdateGame();
+    p->GenerateOutput();
   }
 }
 
